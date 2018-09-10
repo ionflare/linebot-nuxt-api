@@ -34,9 +34,11 @@ module.exports = {
     }
     }),
     '~/api'
+    
    */
     //{ path: '/api', handler: '~/api/index.js' },
-     '~/api'
+    //{ path: '/api2', handler: '~/api2/index.js' }
+      '~/api', '~/api2'
   ],
     modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
