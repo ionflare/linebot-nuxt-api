@@ -1,7 +1,10 @@
 {
   "name": "linebot-nuxt-api",
   "scripts": {
-    "dev": "nuxt"
+  "dev": "nuxt",
+  "build": "nuxt build",
+  "start": "nuxt start",
+  "heroku-postbuild": "npm run build"
   },
   "dependencies": {
     "@line/bot-sdk": "6.2.1",
