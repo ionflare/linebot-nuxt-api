@@ -32,6 +32,24 @@ app.get('/webhook',async(req,res)=>{
  
 })
 
+app.get('/testdb',async(req,res)=>{
+    
+   //req.session.current_user = null;
+    var _mailbox = new MailBox({
+                
+                 from_user_id :  "xxx",
+                 to_user_id :  "yyy",
+                 message : "zzz",
+                 lastupdate : new Date().getTime(),
+            });
+   await _mailbox.save();
+   
+   
+   await res.send("xxx" );
+ 
+})
+
+
 
 
 // register a webhook handler with middleware
@@ -68,7 +86,7 @@ function handleEvent(event) {
                  message : event.message.text,
                  lastupdate : new Date().getTime(),
             });
-          return _mailbox.save();
+    return _mailbox.save();
   
   
 }
