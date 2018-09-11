@@ -5,7 +5,7 @@
     },
     "development":{
         "MONGODB_URI":"mongodb://chanon:chanon1234@ds131932.mlab.com:31932/line-nuxt-booking-v2",
-        "JWT_SECRET":"eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FjY2Vzcy5saW5lLm1lIiwic3ViIjoiVTZhMDc2NDg5MGNkYmI1MzkzYjg0YWNjYjdiMzdjMjY2IiwiYXVkIjoiMTU5MDAxNTI3NiIsImV4cCI6MTUzMzAzNTgyMiwiaWF0IjoxNTMzMDMyMjIyLCJub25jZSI6IjI5ZDY3MWJhZTE1NDEzNTZhOGIwYjE5NDY4YmYzNWI2MGNkMWRiMWIiLCJuYW1lIjoiY2hhbm9uIiwicGljdHVyZSI6Imh0dHBzOi8vcHJvZmlsZS5saW5lLXNjZG4ubmV0LzBtMDM5Yjg5ZjQ3MjUxYjg3NjFhZWI3Y2Y5OTNmMjhlMDNmNjc5YTg5N2Q4ZWIifQ.8-gYuSwyCv-hQe-A-LZ8BrWjRlAuZQGdRsL03B_oWXw"
+        "JWT_SECRET":"shhh"
     },
      "production":{
         "MONGODB_URI":"mongodb://chanon:chanon1234@ds131932.mlab.com:31932/line-nuxt-booking-v2",
