@@ -1,4 +1,13 @@
 
+require('./config/config.js') //config for mongodb, jws
+
+const ObjectId = require('mongoose').Types.ObjectId; 
+
+const { MailBox } = require("./models/mailbox")
+
+const Client = require('@line/bot-sdk').Client;
+
+
 const line = require('@line/bot-sdk');
 const express = require('express');
 
@@ -45,10 +54,25 @@ function handleEvent(event) {
   }
 
   // create a echoing text message
-  const echo = { type: 'text', text: event.message.text };
+  //const echo = { type: 'text', text: event.message.text };
 
   // use reply API
-  return client.replyMessage(event.replyToken, echo);
+  return client.replyMessage(event.replyToken, event.userId);
+  /*
+     var _mailbox = new MailBox({
+                
+                 from_user_id : event.message,
+                 service_id :  req.param('service_id'),
+                 customer_id : req.param('customer_id'),
+                 quantity : 1,
+                 comment : "",
+                 isServed : false,
+                 isCancelled : false,
+                 lastupdate : new Date().getTime(),
+            });
+           doc = _bookinginfo.save();
+  */
+  
 }
 
 
@@ -56,11 +80,3 @@ module.exports = {
     path: '/api',
     handler: app
 }
-
-// listen on port
-/*
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`listening on ${port}`);
-});
-*/

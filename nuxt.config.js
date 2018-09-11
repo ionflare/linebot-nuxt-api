@@ -1,9 +1,9 @@
 
-/*
+
 require("dotenv").config(); //add for LINELOGIN
 
-const bodyParser = require('body-parser')
-const session = require('express-session')
+//const bodyParser = require('body-parser')
+//const session = require('express-session')
 
 // setBaseURL
 var env = process.env.NODE_ENV || 'development';
@@ -15,7 +15,7 @@ if (env === 'development' || env === 'test') {
 else{
   var API_URL=process.env.HEROKU_URL
 }
-*/
+
 module.exports = {
    
   mode: 'universal',
