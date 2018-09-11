@@ -56,24 +56,20 @@ function handleEvent(event) {
   // create a echoing text message
   //const echo = { type: 'text', text: event.message.text };
   
-  const echo = { type: 'text', text: "User: " + event.source.userId + ". Text : " + event.message.text};
+  //const echo = { type: 'text', text: "User: " + event.source.userId + ". Text : " + event.message.text};
 
   // use reply API
-  return client.replyMessage(event.replyToken, echo);
-  /*
+  //return client.replyMessage(event.replyToken, echo);
+  
      var _mailbox = new MailBox({
                 
-                 from_user_id : event.message,
-                 service_id :  req.param('service_id'),
-                 customer_id : req.param('customer_id'),
-                 quantity : 1,
-                 comment : "",
-                 isServed : false,
-                 isCancelled : false,
+                 from_user_id :  event.source.userId,
+                 to_user_id :  "xxx",
+                 message : event.message.text,
                  lastupdate : new Date().getTime(),
             });
-           doc = _bookinginfo.save();
-  */
+          return _mailbox.save();
+  
   
 }
 
