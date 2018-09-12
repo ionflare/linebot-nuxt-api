@@ -4,6 +4,8 @@ require('./config/config.js') //config for mongodb, jws
 const ObjectId = require('mongoose').Types.ObjectId; 
 const { mongoose } = require('./db/mongoose');
 const { MailBox } = require("./models/mailbox")
+const { BookInfo } = require("./models/bookinfo")
+const { User } = require("./models/user")
 const Client = require('@line/bot-sdk').Client;
 
 
@@ -135,7 +137,7 @@ function handleEvent(event) {
 
   // use reply API
   //return client.replyMessage(event.replyToken, echo);
-  
+    /*
      var _mailbox = new MailBox({
                 
                  from_user_id :  event.source.userId,
@@ -144,7 +146,41 @@ function handleEvent(event) {
                  lastupdate : new Date().getTime(),
             });
     return _mailbox.save();
-  
+    */
+    
+    User.findOne({
+         username : event.source.userId
+        }).then((customer_user)=>{
+            BookInfo.findOne({customer_id     : customer_user._id},
+             {}, { sort: { 'lastupdate': -1 }}
+            ).then((booking_info)=>{ 
+                User.findOne({ _id : new ObjectId(booking_info.provider_id) }).then((provider_user)=>{
+                    //Add data to db
+                    var _mailbox = new MailBox({
+                
+                         from_user_id :  event.source.userId,
+                         to_user_id : provider_user._id,
+                         message : event.message.text,
+                         lastupdate : new Date().getTime(),
+                        });
+                    return _mailbox.save();
+                    
+                }).catch((e)=> { 
+                    return client.replyMessage(event.replyToken,  { type: 'text', text: "This is message from system : Errors occured while searching provider info." });
+                 } );
+                
+            }).catch((e)=> { 
+                return client.replyMessage(event.replyToken,  { type: 'text', text: "This is message from system : Can not contact to providers because You did not booked any service yet." });
+            } );
+            
+      
+    }).catch((e)=> { 
+        return client.replyMessage(event.replyToken,  { type: 'text', text: "This is message from system : Your line account is not registered for this service." });
+            } );
+    
+    
+    
+    
   
 }
 
