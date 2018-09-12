@@ -151,7 +151,7 @@ function handleEvent(event) {
     User.findOne({
          username : event.source.userId
         }).then((customer_user)=>{
-            BookInfo.findOne({customer_id     : customer_user._id},
+            BookInfo.findOne({customer_id  : customer_user._id},
              {}, { sort: { 'lastupdate': -1 }}
             ).then((booking_info)=>{ 
                 User.findOne({ _id : new ObjectId(booking_info.provider_id) }).then((provider_user)=>{
@@ -159,6 +159,7 @@ function handleEvent(event) {
                     var _mailbox = new MailBox({
                 
                          from_user_id :  event.source.userId,
+                         from_user_displayName : customer_user.displayName,
                          to_user_id : provider_user._id,
                          message : event.message.text,
                          lastupdate : new Date().getTime(),

@@ -1,7 +1,10 @@
 var mongoose = require('mongoose');
 
 var MailBox_Schema = new mongoose.Schema({
-    from_user_id:{
+       from_user_id:{
+        type: String,
+    },
+    from_user_displayName:{
         type: String,
     },
     to_user_id:{
