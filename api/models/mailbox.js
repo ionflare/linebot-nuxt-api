@@ -17,6 +17,9 @@ var MailBox_Schema = new mongoose.Schema({
     to_user_web_id:{
         type: String,
     },
+     to_user_line_id:{
+        type: String,
+    },
     to_user_web_displayName:{
         type: String,
     },

@@ -176,6 +176,7 @@ function handleEvent(event) {
                         from_user_web_displayName : sender_user.displayName,
                         from_user_src_imageProfile : sender_user.picture,
                         to_user_web_id : provider_user._id,
+                        to_user_line_id : "",
                         to_user_web_displayName : provider_user.displayName,
                         messageType : event.message.type,
                         messageInfo : event.message.text,
