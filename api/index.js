@@ -125,10 +125,23 @@ app.post('/callback', line.middleware(config), (req, res) => {
 
 // event handler
 function handleEvent(event) {
+    
   if (event.type !== 'message' || event.message.type !== 'text') {
     // ignore non-text-message event
     return Promise.resolve(null);
   }
+  
+  
+  /*
+  if (event.type !== 'message' ) {
+    // ignore non-text-message event
+    return Promise.resolve(null);
+  }
+  if(!(event.message.type == 'text' || event.message.type !== 'image'))
+  {
+      return Promise.resolve(null);
+  }
+  */
 
   // create a echoing text message
   //const echo = { type: 'text', text: event.message.text };
@@ -150,19 +163,32 @@ function handleEvent(event) {
     
     User.findOne({
          username : event.source.userId
-        }).then((customer_user)=>{
-            BookInfo.findOne({customer_id  : customer_user._id},
+        }).then((sender_user)=>{
+            BookInfo.findOne({customer_id  : sender_user._id},
              {}, { sort: { 'lastupdate': -1 }}
             ).then((booking_info)=>{ 
                 User.findOne({ _id : new ObjectId(booking_info.provider_id) }).then((provider_user)=>{
                     //Add data to db
                     var _mailbox = new MailBox({
-                
+                        
+                        from_user_web_id : sender_user._id,
+                        from_user_line_id :  event.source.userId,
+                        from_user_web_displayName : sender_user.displayName,
+                        from_user_src_imageProfile : sender_user.picture,
+                        to_user_web_id : provider_user._id,
+                        to_user_web_displayName : provider_user.displayName,
+                        messageType : event.message.type,
+                        messageInfo : event.message.text,
+                        IsSeen : false,
+                        lastupdate : new Date().getTime(),
+                        
+                        /*
                          from_user_id :  event.source.userId,
                          from_user_displayName : customer_user.displayName,
                          to_user_id : provider_user._id,
                          message : event.message.text,
                          lastupdate : new Date().getTime(),
+                         */
                         });
                     return _mailbox.save();
                     
