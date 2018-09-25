@@ -125,23 +125,24 @@ app.post('/callback', line.middleware(config), (req, res) => {
 
 // event handler
 function handleEvent(event) {
-    
+  
+  /*  
   if (event.type !== 'message' || event.message.type !== 'text') {
     // ignore non-text-message event
     return Promise.resolve(null);
   }
+  */
   
   
-  /*
   if (event.type !== 'message' ) {
     // ignore non-text-message event
     return Promise.resolve(null);
   }
-  if(!(event.message.type == 'text' || event.message.type !== 'image'))
+  if(!(event.message.type == 'text' || event.message.type == 'location'))
   {
       return Promise.resolve(null);
   }
-  */
+  
 
   // create a echoing text message
   //const echo = { type: 'text', text: event.message.text };
@@ -169,6 +170,21 @@ function handleEvent(event) {
             ).then((booking_info)=>{ 
                 User.findOne({ _id : new ObjectId(booking_info.provider_id) }).then((provider_user)=>{
                     //Add data to db
+                    
+                    
+                    var MsgInfo= "";
+                    if(event.message.type == 'text')
+                    {
+                        MsgInfo = event.message.text;
+                    }
+                    else if(event.message.type == 'location')
+                    {
+                        MsgInfo = "address="+ event.message.address +
+                        "&latitude="+event.message.latitude+
+                        "&longitude="+event.message.longitude;
+                    }
+                    
+                    
                     var _mailbox = new MailBox({
                         
                         from_user_web_id : sender_user._id,
@@ -179,17 +195,11 @@ function handleEvent(event) {
                         to_user_line_id : "",
                         to_user_web_displayName : provider_user.displayName,
                         messageType : event.message.type,
-                        messageInfo : event.message.text,
+                        messageInfo : MsgInfo,
                         IsSeen : false,
                         lastupdate : new Date().getTime(),
                         
-                        /*
-                         from_user_id :  event.source.userId,
-                         from_user_displayName : customer_user.displayName,
-                         to_user_id : provider_user._id,
-                         message : event.message.text,
-                         lastupdate : new Date().getTime(),
-                         */
+                        
                         });
                     return _mailbox.save();
                     
