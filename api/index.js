@@ -136,10 +136,12 @@ function handleEvent(event) {
   
   if (event.type !== 'message' ) {
     // ignore non-text-message event
+    client.replyMessage(event.replyToken,  { type: 'text', text: "ERROR : Input message is not text or location." });
     return Promise.resolve(null);
   }
   if(!(event.message.type == 'text' || event.message.type == 'location'))
   {
+    client.replyMessage(event.replyToken,  { type: 'text', text: "ERROR : Input message is not text or location." });
       return Promise.resolve(null);
   }
   
